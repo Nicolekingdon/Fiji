@@ -6,23 +6,66 @@
 #
 #    http://shiny.rstudio.com/
 #
-
+# install.packages("ggthemes")
 library(shiny)
+library(ggplot2)
+library(dplyr)
+library(ggthemes)
 
-# Define server logic required to draw a histogram
-function(input, output, session) {
 
-    output$distPlot <- renderPlot({
+csv_file_path <- read.csv("/Users/nicolekingdon/Documents/Education/MSSP /BOOTCAMP/floods/Fiji/Demographics.csv")
+                  
+csv_file_path <- csv_file_path |>
+  filter(Location == "Fiji") |>
+  filter(Time < 2024)
 
-        # generate bins based on input$bins from ui.R
-        x    <- faithful[, 2]
-        bins <- seq(min(x), max(x), length.out = input$bins + 1)
-
-        # draw the histogram with the specified number of bins
-        hist(x, breaks = bins, col = 'darkgray', border = 'white',
-             xlab = 'Waiting time to next eruption (in mins)',
-             main = 'Histogram of waiting times')
-
-    })
-
+# Define server logic required to make a ggplot
+function(input, output) {
+  # Create reactive for the filtered data
+  filtered_data <- reactive({
+    csv_file_path
+  })
+  
+  # Create total population ggplot based on the data
+  output$myPlot <- renderPlot({
+    ggplot(filtered_data(), aes(x = Time, y = TPopulation1July)) +
+      geom_point() +
+      labs(title = "Total Population of Fiji (1950-2023)",
+           x = "Year",
+           y = "Total Population in 1,000s"
+           ) +
+      theme_economist()
+  })
+  
+  # Create total male population ggplot based on the data
+  output$myPlot2 <- renderPlot({
+    ggplot(filtered_data(), aes(x = Time, y = TPopulationMale1July)) +
+      geom_point() +
+      labs(title = "Total Male Population of Fiji (1950-2023)",
+           x = "Year",
+           y = "Total Male Population in 1,000s"
+      ) +
+      theme_economist()
+  })
+  
+  # Create total female population ggplot based on the data
+  output$myPlot3 <- renderPlot({
+    ggplot(filtered_data(), aes(x = Time, y = TPopulationFemale1July)) +
+      geom_point() +
+      labs(title = "Total Female Population of Fiji (1950-2023)",
+           x = "Year",
+           y = "Total Female Population in 1,000s"
+      ) +
+      theme_economist()
+  })
+  
+  output$myPlot4 <- renderPlot({
+    ggplot(filtered_data(), aes(x = Time, y = MedianAgePop)) +
+      geom_point() +
+      labs(title = "Median Age of Fiji's Population (1950-2023)",
+           x = "Year",
+           y = "Median Age in Years"
+      ) +
+      theme_economist()
+  })
 }

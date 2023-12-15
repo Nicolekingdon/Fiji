@@ -28,14 +28,16 @@ ui <- navbarPage(id = "tabs",
                  navbarMenu(
                    title = "About",
                    tabPanel("General Information",
-                            h1("The Pacific Island: Fiji"),
+                              style = "height: 800px; overflow-y: auto;",
+                            h1("The Pacific Island: Fiji", style = "text-align: center;"),
                             h2("Size"),
-                            img(src="Scenic-fiji.png"),
+                            img(src="www/Scenic-fiji.png", height = 300, width = 500),
                             p(style="font-size:12pt", "Located in the South Pacific, 
                                 Fiji has over 300 islands and 540 islets than span over 
                                 1,000,000 square miles. Only 100 of the 300 islands hold 
                                 inhabitants with a total population of 898,000."),
-                            h2("Main Islands"),
+                            h2("Main Islands"), 
+                            img(src="www/Scenic-fiji.png", height = 300, width = 500),
                             p(style="font-size:12pt", "There are 13 major islands in Fiji;
                               in order of highest to lowest population, the islands are Suva,
                               Nadi, Nasusori, Lautoka, Labasa, Lami, Nakasi, Ba, Sigatoka, Navua,
@@ -58,9 +60,17 @@ ui <- navbarPage(id = "tabs",
                    )
                  ),
                  
-                 nav_panel("Demographics", p("Tables and plots go here."),
-                           
-                           shinypanels::box("box", colapsed=F)
+                 nav_panel("Demographics", 
+                           style = "height: 800px; overflow-y: auto;",
+                           h2("Population Demographics", style = "text-align: center;"),
+                           h3("Total Population", style = "text-align: center;"),
+                           plotOutput("myPlot"),
+                           h3("Total Male Population",style = "text-align: center;"),
+                           plotOutput("myPlot2"),
+                           h3("Total Female Population", style = "text-align: center;"),
+                           plotOutput("myPlot3"),
+                           h3("Median Age of Population", style = "text-align: center;"),
+                           plotOutput("myPlot4")
                  ),
                  
                  nav_panel("Pacific Region",
@@ -95,10 +105,8 @@ ui <- navbarPage(id = "tabs",
                                   h4("The United Nation's Multidimensional Vulnerability
                                   Index (MVI) has two pillars: Structural Vulnerability 
                                   and Structural Resilience, each with three dimensions: 
-                                  social, economic, and environmental stressors.
-                                  These were used to determine the strengths, weaknesses,
-                                  opportunites, and threats to the island of Fiji. The
-                                  overal MVI for Fiji is just below the median (51.7) with
+                                  social, economic, and environmental stressors. The
+                                  overall MVI for Fiji is just below the median (51.7) with
                                   a maximum score of 100."
                                       ),
                               
@@ -205,6 +213,5 @@ ui <- navbarPage(id = "tabs",
                  )
                  
 )
-
 
 
