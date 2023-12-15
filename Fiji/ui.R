@@ -26,31 +26,48 @@ ui <- navbarPage(id = "tabs",
                  theme = shinytheme("united"),
                  
                  navbarMenu(
-                   title = "About",
-                   tabPanel("General Information",
-                              style = "height: 800px; overflow-y: auto;",
-                            h1("The Pacific Island: Fiji", style = "text-align: center;"),
-                            h2("Size"),
-                            img(src="www/Scenic-fiji.png", height = 300, width = 500),
-                            p(style="font-size:12pt", "Located in the South Pacific, 
-                                Fiji has over 300 islands and 540 islets than span over 
-                                1,000,000 square miles. Only 100 of the 300 islands hold 
-                                inhabitants with a total population of 898,000."),
-                            h2("Main Islands"), 
-                            img(src="www/Scenic-fiji.png", height = 300, width = 500),
-                            p(style="font-size:12pt", "There are 13 major islands in Fiji;
-                              in order of highest to lowest population, the islands are Suva,
-                              Nadi, Nasusori, Lautoka, Labasa, Lami, Nakasi, Ba, Sigatoka, Navua,
-                              Vaileka, Savusavu, and Levuka.
-                                "),
-                            h2("Capital"),
-                            img(src="Flag_of_Fiji.svg"),
-                            p(style="font-size:12pt", "Fiji's capital is Suva.
-                                The name derived from it being located on the Suva Point
-                                between the Rewa River and Suva Harbour. This is a main
-                                commerical hub of Fiji with tourism, exports, and an airport.
-                                "),
-                   ),
+    title = "About",
+    tabPanel(
+      "General Information",
+      h1("The Pacific Island: Fiji", style = "text-align: center;"),
+      h3("Where Happiness Comes Naturally...", style = "text-align: center; font-style: italic;"),
+      fluidRow(
+        column(
+          width = 6,
+          style = "height: 600px; overflow-y: auto; text-align: center;",
+          h2("Population & Islands"),
+          tags$div(
+            img(src = "Scenic-fiji.png", height = 300, width = 500),
+            p(
+              style = "font-size:12pt",
+              "Located in the South Pacific, Fiji has over 300 islands and 540 islets that span over 1,000,000 square miles. Only 100 of the 300 islands hold inhabitants with a total population of 898,000."
+            ),
+            h3("Main Islands"),
+            tags$div(
+              p(
+                style = "font-size:12pt",
+                "There are 13 major islands in Fiji; in order of highest to lowest population, the islands are Suva, Nadi, Nasusori, Lautoka, Labasa, Lami, Nakasi, Ba, Sigatoka, Navua, Vaileka, Savusavu, and Levuka."
+              ),
+              h3("Capital"),
+              tags$div(
+                img(src = "Suva.png", height = 300, width = 500),
+                p(
+                  style = "font-size:12pt",
+                  "Fiji's capital is Suva. The name derived from it being located on the Suva Point between the Rewa River and Suva Harbour. This is a main commercial hub of Fiji with tourism, exports, and an airport."
+                )
+              )
+            )
+          )
+        ),
+        column(
+          width = 6,
+          h2(""),
+          style = "height: 600px; overflow-y: auto; text-align: center;",
+          HTML('<iframe width="560" height="315" src="https://www.youtube.com/embed/zleIaEIBs2M?si=W6UnMss6sNIK98F4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>')
+      )
+    )
+  ),
+
                    
                    tabPanel("World Location"),
                    tabPanel("Regional Location"),
@@ -70,7 +87,11 @@ ui <- navbarPage(id = "tabs",
                            h3("Total Female Population", style = "text-align: center;"),
                            plotOutput("myPlot3"),
                            h3("Median Age of Population", style = "text-align: center;"),
-                           plotOutput("myPlot4")
+                           plotOutput("myPlot4"),
+                           h3("Total Births", style = "text-align: center;"),
+                           plotOutput("myPlot6"),
+                           h3("Total Deaths", style = "text-align: center;"),
+                           plotOutput("myPlot5")
                  ),
                  
                  nav_panel("Pacific Region",

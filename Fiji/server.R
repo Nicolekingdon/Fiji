@@ -13,7 +13,7 @@ library(dplyr)
 library(ggthemes)
 
 
-csv_file_path <- read.csv("/Users/nicolekingdon/Documents/Education/MSSP /BOOTCAMP/floods/Fiji/Demographics.csv")
+csv_file_path <- read.csv("/Users/nicolekingdon/Documents/Education/MSSP /BOOTCAMP/floods/Fiji/Fiji/Demographics.csv")
                   
 csv_file_path <- csv_file_path |>
   filter(Location == "Fiji") |>
@@ -65,6 +65,26 @@ function(input, output) {
       labs(title = "Median Age of Fiji's Population (1950-2023)",
            x = "Year",
            y = "Median Age in Years"
+      ) +
+      theme_economist()
+  })
+  
+  output$myPlot5 <- renderPlot({
+    ggplot(filtered_data(), aes(x = Time, y = Deaths)) +
+      geom_point() +
+      labs(title = "Total Deaths per a Year (1950-2023)",
+           x = "Year",
+           y = "Total Deaths per Year"
+      ) +
+      theme_economist()
+  })
+  
+  output$myPlot6 <- renderPlot({
+    ggplot(filtered_data(), aes(x = Time, y = Births)) +
+      geom_point() +
+      labs(title = "Total Births per a Year (1950-2023)",
+           x = "Year",
+           y = "Total Births per Year"
       ) +
       theme_economist()
   })
