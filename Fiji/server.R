@@ -12,6 +12,38 @@ library(ggplot2)
 library(dplyr)
 library(ggthemes)
 
+csv4 <- read.csv("/Users/nicolekingdon/Documents/Education/MSSP /BOOTCAMP/floods/Fiji/Fiji/sr-MVI.csv")
+
+csv4 <- csv4 |>
+  filter(Country %in% c("Fiji", "Vanuatu", "Tuvalu", "Tonga", 
+                        "Solomon Islands", "Palau", "Nauru", 
+                        "Marshall Islands", "Kiribati", 
+                        "Micronesia (Federated States of)"))
+
+
+csv3 <- read.csv("/Users/nicolekingdon/Documents/Education/MSSP /BOOTCAMP/floods/Fiji/Fiji/sv-MVI.csv")
+
+csv3 <- csv3 |>
+  filter(Country %in% c("Fiji", "Vanuatu", "Tuvalu", "Tonga", 
+                        "Solomon Islands", "Palau", "Nauru", 
+                        "Marshall Islands", "Kiribati", 
+                        "Micronesia (Federated States of)"))
+
+
+csv2 <- read.csv("/Users/nicolekingdon/Documents/Education/MSSP /BOOTCAMP/floods/Fiji/Fiji/MVI-scores.csv")
+
+colnames(csv2) <- csv2[1, ]
+csv2 <- csv2[-1, ]
+
+csv2 <- csv2 |>
+  filter(Country %in% c("Fiji", "Vanuatu", "Tuvalu", "Tonga", 
+                        "Solomon Islands", "Palau", "Nauru", 
+                        "Marshall Islands", "Kiribati", 
+                        "Micronesia (Federated States of)")) |>
+  mutate(svi = 'Structural vulnerability index' / 10)
+
+
+
 
 csv_file_path <- read.csv("/Users/nicolekingdon/Documents/Education/MSSP /BOOTCAMP/floods/Fiji/Fiji/Demographics.csv")
                   
@@ -24,6 +56,18 @@ function(input, output) {
   # Create reactive for the filtered data
   filtered_data <- reactive({
     csv_file_path
+  })
+  
+  data2 <- reactive({
+    csv2
+  })
+  
+  data3 <- reactive({
+    csv3
+  })
+  
+  data4 <- reactive({
+    csv4
   })
   
   # Create total population ggplot based on the data
@@ -87,5 +131,27 @@ function(input, output) {
            y = "Total Births per Year"
       ) +
       theme_economist()
+  })
+  
+  output$myPlot7 <- renderPlot({
+    ggplot(csv2, aes(x = Country, y = ('MVI - Score'))) +
+      geom_bar(stat = "identity") +
+      labs(title = "Total MVI Score for Pacific Countries",
+           x = "Country",
+           y = "MVI Score"
+      ) +
+      theme_economist() +
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) 
+  })
+  
+  output$myPlot8 <- renderPlot({
+    ggplot(csv2, aes(x = Country, y = ('Structural vulnerability index'))) +
+      geom_bar(stat = "identity") +
+      labs(title = "Total Structural Vulnerability Score for Pacific Countries",
+           x = "Country",
+           y = "Structural Vulnerability Score"
+      ) +
+      theme_economist() +
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) 
   })
 }
