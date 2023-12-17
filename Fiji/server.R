@@ -12,7 +12,11 @@ library(ggplot2)
 library(dplyr)
 library(ggthemes)
 
+# reading in the structural resilience data
+
 csv4 <- read.csv("/Users/nicolekingdon/Documents/Education/MSSP /BOOTCAMP/floods/Fiji/Fiji/sr-MVI.csv")
+
+## selecting only the Pacific Countries
 
 csv4 <- csv4 |>
   filter(Country %in% c("Fiji", "Vanuatu", "Tuvalu", "Tonga", 
@@ -20,8 +24,15 @@ csv4 <- csv4 |>
                         "Marshall Islands", "Kiribati", 
                         "Micronesia (Federated States of)"))
 
+## trimming Micronesia country name
+
+csv4$Country <- gsub("\\s*\\(.*\\)$", "", csv4$Country)
+
+# reading in the structural vulnerability data
 
 csv3 <- read.csv("/Users/nicolekingdon/Documents/Education/MSSP /BOOTCAMP/floods/Fiji/Fiji/sv-MVI.csv")
+
+## selecting the relevant Pacific countries
 
 csv3 <- csv3 |>
   filter(Country %in% c("Fiji", "Vanuatu", "Tuvalu", "Tonga", 
@@ -29,37 +40,26 @@ csv3 <- csv3 |>
                         "Marshall Islands", "Kiribati", 
                         "Micronesia (Federated States of)"))
 
+## trimming the Micronesia country name
 
-csv2 <- read.csv("/Users/nicolekingdon/Documents/Education/MSSP /BOOTCAMP/floods/Fiji/Fiji/MVI-scores.csv")
+csv3$Country <- gsub("\\s*\\(.*\\)$", "", csv3$Country)
 
-colnames(csv2) <- csv2[1, ]
-csv2 <- csv2[-1, ]
-
-csv2 <- csv2 |>
-  filter(Country %in% c("Fiji", "Vanuatu", "Tuvalu", "Tonga", 
-                        "Solomon Islands", "Palau", "Nauru", 
-                        "Marshall Islands", "Kiribati", 
-                        "Micronesia (Federated States of)")) |>
-  mutate(svi = 'Structural vulnerability index' / 10)
-
-
-
+# reading in the demographic data 
 
 csv_file_path <- read.csv("/Users/nicolekingdon/Documents/Education/MSSP /BOOTCAMP/floods/Fiji/Fiji/Demographics.csv")
-                  
+     
+
+## selecting only Fiji and removing any projected data past 2023
+
 csv_file_path <- csv_file_path |>
   filter(Location == "Fiji") |>
   filter(Time < 2024)
 
 # Define server logic required to make a ggplot
 function(input, output) {
-  # Create reactive for the filtered data
+  # Create reactive for dataframes that were added
   filtered_data <- reactive({
     csv_file_path
-  })
-  
-  data2 <- reactive({
-    csv2
   })
   
   data3 <- reactive({
@@ -103,6 +103,7 @@ function(input, output) {
       theme_economist()
   })
   
+  # create a median age ggplot based on demographic data
   output$myPlot4 <- renderPlot({
     ggplot(filtered_data(), aes(x = Time, y = MedianAgePop)) +
       geom_point() +
@@ -113,6 +114,7 @@ function(input, output) {
       theme_economist()
   })
   
+  # create a average deaths ggplot based on demographic data
   output$myPlot5 <- renderPlot({
     ggplot(filtered_data(), aes(x = Time, y = Deaths)) +
       geom_point() +
@@ -123,6 +125,7 @@ function(input, output) {
       theme_economist()
   })
   
+  # create a total births ggplot based on demographic data
   output$myPlot6 <- renderPlot({
     ggplot(filtered_data(), aes(x = Time, y = Births)) +
       geom_point() +
@@ -133,23 +136,111 @@ function(input, output) {
       theme_economist()
   })
   
+  # create a structural vulnerability index ggplot based on UN MVI
   output$myPlot7 <- renderPlot({
-    ggplot(csv2, aes(x = Country, y = ('MVI - Score'))) +
+    ggplot(data3(), aes(x = Country, y = (Structural.Vulnerability.Index))) +
       geom_bar(stat = "identity") +
-      labs(title = "Total MVI Score for Pacific Countries",
+      labs(title = "Structural Vulnerability Index (SVI) Scores for Pacific Countries",
            x = "Country",
-           y = "MVI Score"
+           y = "SVI Score",
+           caption = "Total score is out of 100 with the higher the score, the more vulnerable the country."
+           
       ) +
       theme_economist() +
       theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) 
   })
   
+  # create an economic vulnerability index ggplot based on UN MVI
   output$myPlot8 <- renderPlot({
-    ggplot(csv2, aes(x = Country, y = ('Structural vulnerability index'))) +
+    ggplot(data3(), aes(x = Country, y = Economic.vulnerability)) +
       geom_bar(stat = "identity") +
-      labs(title = "Total Structural Vulnerability Score for Pacific Countries",
+      labs(title = "Economic Vulnerability Index (EVI) Scores for Pacific Countries",
            x = "Country",
-           y = "Structural Vulnerability Score"
+           y = "EVI Score",
+           caption = "Total score is out of 100 with the higher the score, the more vulnerable the country."
+           
+      ) +
+      theme_economist() +
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) 
+  })
+  
+  # create a social vulnerability index ggplot based on UN MVI
+  output$myPlot9 <- renderPlot({
+    ggplot(data3(), aes(x = Country, y = Social.vulnerability)) +
+      geom_bar(stat = "identity") +
+      labs(title = "Social Vulnerability Index (SVI) Scores for Pacific Countries",
+           x = "Country",
+           y = "SVI Score",
+           caption = "Total score is out of 100 with the higher the score, the more vulnerable the country."
+      ) +
+      theme_economist() +
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) 
+  })
+  
+  # create a structural resilience index ggplot based on UN MVI
+  output$myPlot10 <- renderPlot({
+    ggplot(data4(), aes(x = Country, y = Lack.of.Structural.Resilience.Index)) +
+      geom_bar(stat = "identity") +
+      labs(title = "Structural Resilience Index (SRI) Scores for Pacific Countries",
+           x = "Country",
+           y = "SRI Score",
+           caption = "Total score is out of 100 with the higher the score meaning less resilience."
+           
+      ) +
+      theme_economist() +
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) 
+  })
+  
+  # create an economic resilience index ggplot based on UN MVI
+  output$myPlot11 <- renderPlot({
+    ggplot(data4(), aes(x = Country, y = Lack.of.Economic.Resilience)) +
+      geom_bar(stat = "identity") +
+      labs(title = "Economic Resilience Index (ERI) Scores for Pacific Countries",
+           x = "Country",
+           y = "ERI Score",
+           caption = "Total score is out of 100 with the higher the score meaning less resilience."
+           
+      ) +
+      theme_economist() +
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) 
+  })
+  
+  # create an environmental resilience index ggplot based on UN MVI
+  output$myPlot12 <- renderPlot({
+    ggplot(data4(), aes(x = Country, y = Lack.of.Environmental.Resilience)) +
+      geom_bar(stat = "identity") +
+      labs(title = "Environmental Resilience Index (EnvRI) Scores for Pacific Countries",
+           x = "Country",
+           y = "EnvRI Score",
+           caption = "Total score is out of 100 with the higher the score meaning less resilience."
+           
+      ) +
+      theme_economist() +
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) 
+  })
+  
+  # create a social resilience index ggplot based on UN MVI
+  output$myPlot13 <- renderPlot({
+    ggplot(data4(), aes(x = Country, y = Lack.of.Social.Resilience)) +
+      geom_bar(stat = "identity") +
+      labs(title = "Social Resilience Index (SRI) Scores for Pacific Countries",
+           x = "Country",
+           y = "SRI Score",
+           caption = "Total score is out of 100 with the higher the score meaning less resilience."
+      ) +
+      theme_economist() +
+      theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) 
+  })
+  
+  # create an environmental vulnerability index ggplot based on UN MVI
+  output$myPlot14 <- renderPlot({
+    ggplot(data3(), aes(x = Country, y = Environmental.vulnerability)) +
+      geom_bar(stat = "identity") +
+      labs(title = "Environmental Vulnerability Index (EnvVI) Scores for Pacific Countries",
+           x = "Country",
+           y = "EnvVI Score",
+           caption = "Total score is out of 100 with the higher the score, the more vulnerable the country."
+           
       ) +
       theme_economist() +
       theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) 

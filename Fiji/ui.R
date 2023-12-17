@@ -135,7 +135,7 @@ ui <- navbarPage(id = "tabs",
                  ),
                  
                  nav_panel("Pacific Region",
-                           style = "height: 600px; overflow-y: auto; text-align: center;",
+                           style = "height: 750px; overflow-y: auto; text-align: center;",
                            h1("Pacific Region Islands"),
                            p(style = "font-size:14pt; text-align: left;", "There are three subregions that make up the Pacific Islands:
                              Melanesia, Micronesia, and Polynesia. Melanesia (meaning 'Black Islands') holds about 2,000 islands.
@@ -153,11 +153,35 @@ ui <- navbarPage(id = "tabs",
                            p(style = "font-size:14pt; text-align: left;", "Using the United Nations
                              Multidimensional Vulnerability Index (MVI), the Pacific Region countries,
                              with available data from the UN, were compared and contrasted based on their
-                             MVI scores (See more information on Fiji specifically in the SWOT tab.)"),
+                             MVI scores. (See more information on Fiji specifically in the SWOT tab.)"),
                            h2("Multidimensional Vulnerability Index Scores", style = "text-align: center;"),
-                           plotOutput("myPlot7"),
-                           plotOutput("myPlot8")
                            
+                           fluidRow(
+                             column(
+                               width = 6,
+                               style = "height: 700px; overflow-y: auto;",
+                               h2("Structural Vulnerability Index", style = "text-align: center;"),
+                               plotOutput("myPlot7"),
+                               h3("Economic Vulnerability Index", style = "text-align: center;"),
+                               plotOutput("myPlot8"),
+                               h3("Social Vulnerability Index", style = "text-align: center;"),
+                               plotOutput("myPlot9"),
+                               h3("Environmental Vulnerability Index", style = "text-align: center;"),
+                               plotOutput("myPlot14")
+                             ),
+                             column(
+                               width = 6,
+                               style = "height: 700px; overflow-y: auto;",
+                               h2("Structural Resilience Index", style = "text-align: center;"),
+                               plotOutput("myPlot10"),
+                               h3("Economic Resilience Index", style = "text-align: center;"),
+                               plotOutput("myPlot11"),
+                               h3("Social Resilience Index", style = "text-align: center;"),
+                               plotOutput("myPlot13"),
+                               h3("Environmental Resilience Index", style = "text-align: center;"),
+                               plotOutput("myPlot12")
+                             )
+                           )
                  ),
                  
                  nav_panel("SWOT", 
