@@ -262,10 +262,7 @@ function(input, output) {
                        fillColor="red",
                        stroke = TRUE,
                        color="red",
-                       radius = 4,
-                       label = countries$city,
-                       labelOptions = labelOptions(noHide=T,
-                                                   textOnly = T))
+                       radius = 4)
     
   })
   

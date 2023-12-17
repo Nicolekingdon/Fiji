@@ -5,7 +5,7 @@ account: nicole-kingdon
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 10814946
-bundleId: 8058868
+bundleId: 8059064
 url: https://nicole-kingdon.shinyapps.io/fiji/
 version: 1
 asMultiple: FALSE
