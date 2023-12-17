@@ -21,28 +21,32 @@ library(shinythemes)
 
 ui <- navbarPage(id = "tabs",
                  title = "Fiji",
-                 theme = shinytheme("united"),
+                 theme = shinytheme("united"), # theme
                  
-                 navbarMenu(
+                 navbarMenu( # how to add a drop down menu on the nav bar
                    title = "About",
                    tabPanel(
                      "General Information",
                      h1("The Pacific Island: Fiji", style = "text-align: center;"),
                      h4("Where Happiness Comes Naturally...", style = "text-align: center; font-style: italic;"),
-                     fluidRow(
-                       column(
+                     fluidRow( #fluidRow to make columns on the page
+                       column( #column 1
                          width = 6,
                          style = "height: 650px; overflow-y: auto; text-align: center;",
                          h2("Population & Islands"),
                          tags$div(
-                           HTML('<iframe width="560" height="315" src="https://www.youtube.com/embed/zleIaEIBs2M?si=W6UnMss6sNIK98F4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'),
+                           HTML('<iframe width="560" height="315" 
+                                src="https://www.youtube.com/embed/zleIaEIBs2M?si=W6UnMss6sNIK98F4" 
+                                title="YouTube video player" frameborder="0" allow="accelerometer; 
+                                autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; 
+                                web-share" allowfullscreen></iframe>'), # how to add a video link
                            p(
                              style = "font-size:12pt; text-align: left;",
                              "Located in the South Pacific, Fiji has over 300 islands and 540 islets that span over 1,000,000 square miles. Only 100 of the 300 islands hold inhabitants with a total population of 898,000."
                            ),
                            h3("Main Islands"),
                            tags$div(
-                             img(src = "islands.png", height = 300, width = 500),
+                             img(src = "islands.png", height = 300, width = 500), # how to add an image
                              p(
                                style = "font-size:12pt; text-align: left;",
                                "There are 13 major islands; in order of highest to lowest population, the islands are Suva, Nadi, Nasusori, Lautoka, Labasa, Lami, Nakasi, Ba, Sigatoka, Navua, Vaileka, Savusavu, and Levuka."
@@ -58,9 +62,9 @@ ui <- navbarPage(id = "tabs",
                            )
                          )
                        ),
-                       column(
+                       column( #column 2
                          width = 6,
-                         style = "height: 650px; overflow-y: auto; text-align: center;",
+                         style = "height: 650px; overflow-y: auto; text-align: center;", # height of page is set, the page scrolls, and text is centered
                          
                          h2("Culture", style = "text-align: center;"),
                          HTML('<iframe width="560" height="315" src="https://www.youtube.com/embed/-QOPPKBNOck?si=X-b5VLyaxreN6ZsX" 
@@ -103,22 +107,22 @@ ui <- navbarPage(id = "tabs",
                    ),
                    
                    
-                   tabPanel("Demographics", 
+                   tabPanel("Demographics", # tabPanel in Shiny for demographics
                             h2("Fijian Population Demographics", style = "text-align: center;"),
-                            fluidRow(
-                              column(
+                            fluidRow( #use fluidRow to make columns on the page
+                              column( # column 1
                                 width = 6,
-                                style = "height: 750px; overflow-y: auto;",
-                                h3("Total Population", style = "text-align: center;"),
-                                plotOutput("myPlot"),
+                                style = "height: 700px; overflow-y: auto;", # height of page is set, and the page scrolls
+                                h3("Total Population", style = "text-align: center;"), 
+                                plotOutput("myPlot"), #plots
                                 h3("Total Male Population", style = "text-align: center;"),
                                 plotOutput("myPlot2"),
                                 h3("Total Female Population", style = "text-align: center;"),
                                 plotOutput("myPlot3")
                               ),
-                              column(
+                              column( # column 2
                                 width = 6,
-                                style = "height: 750px; overflow-y: auto;",
+                                style = "height: 700px; overflow-y: auto;", # height of page is set, and the page scrolls
                                 h3("Median Age of Population", style = "text-align: center;"),
                                 plotOutput("myPlot4"),
                                 h3("Total Births", style = "text-align: center;"),
@@ -128,8 +132,8 @@ ui <- navbarPage(id = "tabs",
                               )
                             )
                    ),
-                   tabPanel("SWOT Analysis", 
-                            style = "height: 700px; overflow-y: auto;",
+                   tabPanel("SWOT Analysis", #tabPanel in Shiny for the Fiji SWOT Analysis
+                            style = "height: 700px; overflow-y: auto;", # height of page is set, and the page scrolls
                             h2("Strengths, Weaknesses, Opportunites & Threats (SWOT) Analysis of Fiji", 
                                h4("The United Nation's Multidimensional Vulnerability
                                   Index (MVI) has two pillars: Structural Vulnerability 
@@ -140,7 +144,7 @@ ui <- navbarPage(id = "tabs",
                                ),
                                
                                
-                               panelsPage(
+                               panelsPage( #each page is for a different portion of the SWOT; the widith is set, and each of them collapse
                                  panel(title = "Strengths",
                                        width = 350,
                                        collapsed = TRUE,
@@ -203,7 +207,7 @@ ui <- navbarPage(id = "tabs",
                  ),
                  
                  
-                 nav_panel(
+                 nav_panel( #make a nav_panel, showcasing the pacific region; using the UN's MVI, the countries were compared and contrasted
                    "Pacific Region",
                    style = "height: 750px; overflow-y: auto; text-align: center;",
                    h1("Pacific Region Islands"),
@@ -227,7 +231,7 @@ ui <- navbarPage(id = "tabs",
                    fluidRow(
                      column(
                        width = 6,
-                       style = "height: 750px; overflow-y: auto;",
+                       style = "height: 700px; overflow-y: auto;",
                        h2("Structural Vulnerability Index", style = "text-align: center;"),
                        plotOutput("myPlot7"),
                        h3("Economic Vulnerability Index", style = "text-align: center;"),
@@ -239,7 +243,7 @@ ui <- navbarPage(id = "tabs",
                      ),
                      column(
                        width = 6,
-                       style = "height: 750px; overflow-y: auto;",
+                       style = "height: 700px; overflow-y: auto;",
                        h2("Structural Resilience Index", style = "text-align: center;"),
                        plotOutput("myPlot10"),
                        h3("Economic Resilience Index", style = "text-align: center;"),
@@ -252,7 +256,7 @@ ui <- navbarPage(id = "tabs",
                    )
                  ),
                  
-                 navbarMenu(
+                 navbarMenu( # use navbarMenu in Shiny to make a world, regional, and country map, highlighting Fiji
                    title = "Location Maps",
                    tabPanel("World Map",
                             h1("Fiji's World Location", style = "text-align: center;"),
@@ -272,7 +276,7 @@ ui <- navbarPage(id = "tabs",
                  
                  
                  
-                 navbarMenu(
+                 navbarMenu( #use the navBarMenu in Shiny with panels for references
                    title = "References",
                    align = "right",
                    tabPanel(tags$a(href="https://icem.com.au/portfolio-items/assessment-of-needs-and-opportunities-to-improve-ecosystem-resilience-and-sustainable-tourism-in-fiji/",

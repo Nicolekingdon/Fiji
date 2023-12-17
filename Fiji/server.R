@@ -253,6 +253,7 @@ function(input, output) {
       theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) 
   })
   
+  # create a Fiji country map on leaflet 
   output$mycountrymap <- renderLeaflet({
     leaflet()  %>%
       addProviderTiles(providers$OpenStreetMap.HOT) %>%
@@ -266,6 +267,7 @@ function(input, output) {
     
   })
   
+  # create a Pacific region map with leaflet
   output$myregionalmap <- renderLeaflet({
     leaflet()  %>%
       addProviderTiles(providers$OpenStreetMap.HOT) %>%
@@ -281,6 +283,7 @@ function(input, output) {
     
   })
   
+  # create a world map with leaflet
   output$myworldmap <- renderLeaflet({
     leaflet()  %>%
       addProviderTiles(providers$OpenStreetMap.HOT) %>%
