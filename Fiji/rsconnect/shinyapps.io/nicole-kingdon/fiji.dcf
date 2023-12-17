@@ -1,0 +1,12 @@
+name: fiji
+title:
+username: nicole-kingdon
+account: nicole-kingdon
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 10814946
+bundleId: 8058868
+url: https://nicole-kingdon.shinyapps.io/fiji/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE

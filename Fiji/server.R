@@ -12,9 +12,16 @@ library(ggplot2)
 library(dplyr)
 library(ggthemes)
 
+countries <- read.csv("countries.csv")
+republicFiji <- list(lat = -17.713371, lng = 178.065033)
+republicFiji2 <- data.frame(
+  lat = -17.713371,
+  lon = 178.065033
+)
+
 # reading in the structural resilience data
 
-csv4 <- read.csv("/Users/nicolekingdon/Documents/Education/MSSP /BOOTCAMP/floods/Fiji/Fiji/sr-MVI.csv")
+csv4 <- read.csv("sr-MVI.csv")
 
 ## selecting only the Pacific Countries
 
@@ -30,7 +37,7 @@ csv4$Country <- gsub("\\s*\\(.*\\)$", "", csv4$Country)
 
 # reading in the structural vulnerability data
 
-csv3 <- read.csv("/Users/nicolekingdon/Documents/Education/MSSP /BOOTCAMP/floods/Fiji/Fiji/sv-MVI.csv")
+csv3 <- read.csv("sv-MVI.csv")
 
 ## selecting the relevant Pacific countries
 
@@ -46,7 +53,7 @@ csv3$Country <- gsub("\\s*\\(.*\\)$", "", csv3$Country)
 
 # reading in the demographic data 
 
-csv_file_path <- read.csv("/Users/nicolekingdon/Documents/Education/MSSP /BOOTCAMP/floods/Fiji/Fiji/Demographics.csv")
+csv_file_path <- read.csv("Demographics.csv")
      
 
 ## selecting only Fiji and removing any projected data past 2023
@@ -245,4 +252,51 @@ function(input, output) {
       theme_economist() +
       theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) 
   })
+  
+  output$mycountrymap <- renderLeaflet({
+    leaflet()  %>%
+      addProviderTiles(providers$OpenStreetMap.HOT) %>%
+      setView(lng = republicFiji$lng,
+              lat = republicFiji$lat, zoom = 6.5) %>%
+      addCircleMarkers(data = countries,
+                       fillColor="red",
+                       stroke = TRUE,
+                       color="red",
+                       radius = 4,
+                       label = countries$city,
+                       labelOptions = labelOptions(noHide=T,
+                                                   textOnly = T))
+    
+  })
+  
+  output$myregionalmap <- renderLeaflet({
+    leaflet()  %>%
+      addProviderTiles(providers$OpenStreetMap.HOT) %>%
+      setView(lng = republicFiji$lng,
+              lat = republicFiji$lat, zoom = 4) %>%
+      addCircleMarkers(data = republicFiji2,
+                       label = "Fiji",
+                       labelOptions = labelOptions(noHide=T),
+                       fillColor="red",
+                       stroke = TRUE,
+                       color="red",
+                       radius = 4)
+    
+  })
+  
+  output$myworldmap <- renderLeaflet({
+    leaflet()  %>%
+      addProviderTiles(providers$OpenStreetMap.HOT) %>%
+      setView(lng = republicFiji$lng,
+              lat = republicFiji$lat, zoom = 1) %>%
+      addCircleMarkers(data = republicFiji2,
+                       label = "Fiji",
+                       labelOptions = labelOptions(noHide=T),
+                       fillColor="red",
+                       stroke = TRUE,
+                       color="red",
+                       radius = 4)
+    
+  })
+  
 }

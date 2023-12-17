@@ -7,17 +7,15 @@
 #    http://shiny.rstudio.com/
 #
 # install.packages("shinythemes")
-
+# install.packages("tmap")
 library(shiny)
 library(bslib)
 library(shinypanels)
 library(shinydashboard)
 library(shinydashboardPlus)
 library(leaflet)
+library(tmap)
 library(shinythemes)
-
-
-### Don't forget to comment your code!!
 
 
 
@@ -30,11 +28,11 @@ ui <- navbarPage(id = "tabs",
                    tabPanel(
                      "General Information",
                      h1("The Pacific Island: Fiji", style = "text-align: center;"),
-                     h3("Where Happiness Comes Naturally...", style = "text-align: center; font-style: italic;"),
+                     h4("Where Happiness Comes Naturally...", style = "text-align: center; font-style: italic;"),
                      fluidRow(
                        column(
                          width = 6,
-                         style = "height: 600px; overflow-y: auto; text-align: center;",
+                         style = "height: 700px; overflow-y: auto; text-align: center;",
                          h2("Population & Islands"),
                          tags$div(
                            HTML('<iframe width="560" height="315" src="https://www.youtube.com/embed/zleIaEIBs2M?si=W6UnMss6sNIK98F4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'),
@@ -47,7 +45,7 @@ ui <- navbarPage(id = "tabs",
                              img(src = "islands.png", height = 300, width = 500),
                              p(
                                style = "font-size:12pt; text-align: left;",
-                               "There are 13 major islands in Fiji; in order of highest to lowest population, the islands are Suva, Nadi, Nasusori, Lautoka, Labasa, Lami, Nakasi, Ba, Sigatoka, Navua, Vaileka, Savusavu, and Levuka."
+                               "There are 13 major islands; in order of highest to lowest population, the islands are Suva, Nadi, Nasusori, Lautoka, Labasa, Lami, Nakasi, Ba, Sigatoka, Navua, Vaileka, Savusavu, and Levuka."
                              ),
                              h3("Capital"),
                              tags$div(
@@ -62,7 +60,7 @@ ui <- navbarPage(id = "tabs",
                        ),
                        column(
                          width = 6,
-                         style = "height: 600px; overflow-y: auto; text-align: center;",
+                         style = "height: 700px; overflow-y: auto; text-align: center;",
                          
                          h2("Culture", style = "text-align: center;"),
                          HTML('<iframe width="560" height="315" src="https://www.youtube.com/embed/-QOPPKBNOck?si=X-b5VLyaxreN6ZsX" 
@@ -72,7 +70,6 @@ ui <- navbarPage(id = "tabs",
             tend to visit tradtional villages and participate in cultural activities.
             Fijian language is divided into Eastern (standard Fijian) and Western (Bauan Fijian). Indigenous Fijians speak Bauan Fijian. 
             "),
-                         
                          h3("Flag"),
                          img(src = "Flag_of_Fiji.svg", height = 300, width = 500),
                          p(style = "font-size:12pt; text-align: left;", "The Fijian flag has changed three times over the course of the islands
@@ -99,42 +96,108 @@ ui <- navbarPage(id = "tabs",
                      )
                    ),
                    
-                   
-                   tabPanel("World Location"),
-                   tabPanel("Regional Location"),
-                   tabPanel("Country Location",
-                            leafletOutput("mycountrymap", height = 700),
-                            p()
-                   )
+                  
+                   tabPanel("Demographics", 
+                            h2("Fijian Population Demographics", style = "text-align: center;"),
+                            fluidRow(
+                              column(
+                                width = 6,
+                                style = "height: 750px; overflow-y: auto;",
+                                h3("Total Population", style = "text-align: center;"),
+                                plotOutput("myPlot"),
+                                h3("Total Male Population", style = "text-align: center;"),
+                                plotOutput("myPlot2"),
+                                h3("Total Female Population", style = "text-align: center;"),
+                                plotOutput("myPlot3")
+                              ),
+                              column(
+                                width = 6,
+                                style = "height: 750px; overflow-y: auto;",
+                                h3("Median Age of Population", style = "text-align: center;"),
+                                plotOutput("myPlot4"),
+                                h3("Total Births", style = "text-align: center;"),
+                                plotOutput("myPlot6"),
+                                h3("Total Deaths", style = "text-align: center;"),
+                                plotOutput("myPlot5")
+                              )
+                            )
+                   ),
+                   tabPanel("SWOT Analysis", 
+                            style = "height: 700px; overflow-y: auto;",
+                            h2("Fijian Strengths, Weaknesses, Opportunites & Threats (SWOT) Analysis", 
+                               h4("The United Nation's Multidimensional Vulnerability
+                                  Index (MVI) has two pillars: Structural Vulnerability 
+                                  and Structural Resilience, each with three dimensions: 
+                                  social, economic, and environmental stressors. The
+                                  overall MVI for Fiji is just below the median (51.7) with
+                                  a maximum score of 100."
+                               ),
+                               
+                               
+                               panelsPage(
+                                 panel(title = "Strengths",
+                                       width = 350,
+                                       collapsed = TRUE,
+                                       body = 
+                                         p(style = "font-size:20pt","Fiji's enviornment is one of their largest strengths, as
+                                                 they have a positive Environmental Vulnerability score (70.48).
+                                                 There exposure to natural hazards is low, rarely being victims
+                                                 of natural hazards and experiencing no damages. Additionally,
+                                                 extreme weather events are rare with very few rainfall, heat, or temperature shocks. 
+                                                 Lack of environmental resilience is low for Fiji (53.2), where they rarely experience
+                                           inadequacy of water supply and are able to renew their freshwater resources. There 
+                                           are also many trees to block heat. Additionally, lack of social resilience is around the middle (43.43),
+                                                 with low demographic pressure (dependency ratio and population density) and social service provision,
+                                                 where there is not a lot of use of basic services, low child mortality, and more years of schooling.")
+                                 ),
+                                 panel(
+                                   title = "Weaknesses",
+                                   width = 350,
+                                   collapsed = TRUE,
+                                   body = 
+                                     p(style = "font-size:20pt","Lack of economic resilience is high with extremely low capcaity to
+                                              integrate with international markets. Additionally there is a low
+                                              population size, which impacts the economy of the island. On the other hand,
+                                              there is lack of crop land, which impacts their agricultural system. Finally,
+                                              there is a lack of gender equity in the country with few women represented
+                                              in national parliament.")
+                                 ),
+                                 
+                                 panel(
+                                   title = "Opportunities",
+                                   width = 350,
+                                   collapsed = TRUE,
+                                   body = 
+                                     p(style = "font-size:20pt","Since population is low and the economy is weak, 
+                                              it is important to capitalize on the tourism on the island. 
+                                              The COVID-19 Pandemic appeared to disrupt the tourism on the island.
+                                              The World Bank and the Marine Ecology Consulting has conducted a 
+                                              needs and opportunites assessment to determine areas to build upon
+                                              and provide additional supports related to ecosystem resilience and sustainable
+                                              tourism.")
+                                   
+                                 ),
+                                 panel(
+                                   title = "Threats",
+                                   width = 350,
+                                   collapse = TRUE,
+                                   body =
+                                     p(style = "font-size:20pt","Most of Fiji's conservation efforts have been put towards
+                                              rainforests, coral reefs, and beaches, but they have left out dry forests.
+                                              Fijian dry forests require addtional supports to prevent against grazing, fire
+                                              forest clearing, and invasive species. The Fijian government fails to support
+                                              environmental planning and puts little care into improving their efforts.")
+                                   
+                                 )
+                               )
+                               
+                            )
+                   ),
                  ),
                  
-                 nav_panel("Demographics", 
-                           h2("Population Demographics", style = "text-align: center;"),
-                           fluidRow(
-                             column(
-                               width = 6,
-                               style = "height: 700px; overflow-y: auto;",
-                               h3("Total Population", style = "text-align: center;"),
-                               plotOutput("myPlot"),
-                               h3("Total Male Population", style = "text-align: center;"),
-                               plotOutput("myPlot2"),
-                               h3("Total Female Population", style = "text-align: center;"),
-                               plotOutput("myPlot3")
-                             ),
-                             column(
-                               width = 6,
-                               style = "height: 700px; overflow-y: auto;",
-                               h3("Median Age of Population", style = "text-align: center;"),
-                               plotOutput("myPlot4"),
-                               h3("Total Births", style = "text-align: center;"),
-                               plotOutput("myPlot6"),
-                               h3("Total Deaths", style = "text-align: center;"),
-                               plotOutput("myPlot5")
-                             )
-                           )
-                 ),
-                 
-                 nav_panel("Pacific Region",
+                
+                 nav_panel(
+                   "Pacific Region",
                            style = "height: 750px; overflow-y: auto; text-align: center;",
                            h1("Pacific Region Islands"),
                            p(style = "font-size:14pt; text-align: left;", "There are three subregions that make up the Pacific Islands:
@@ -159,7 +222,7 @@ ui <- navbarPage(id = "tabs",
                            fluidRow(
                              column(
                                width = 6,
-                               style = "height: 700px; overflow-y: auto;",
+                               style = "height: 750px; overflow-y: auto;",
                                h2("Structural Vulnerability Index", style = "text-align: center;"),
                                plotOutput("myPlot7"),
                                h3("Economic Vulnerability Index", style = "text-align: center;"),
@@ -171,7 +234,7 @@ ui <- navbarPage(id = "tabs",
                              ),
                              column(
                                width = 6,
-                               style = "height: 700px; overflow-y: auto;",
+                               style = "height: 750px; overflow-y: auto;",
                                h2("Structural Resilience Index", style = "text-align: center;"),
                                plotOutput("myPlot10"),
                                h3("Economic Resilience Index", style = "text-align: center;"),
@@ -184,94 +247,19 @@ ui <- navbarPage(id = "tabs",
                            )
                  ),
                  
-                 nav_panel("SWOT", 
-                           style = "height: 700px; overflow-y: auto;",
-                           h2("Strengths, Weaknesses, Opportunites & Threats (SWOT)", 
-                              h4("The United Nation's Multidimensional Vulnerability
-                                  Index (MVI) has two pillars: Structural Vulnerability 
-                                  and Structural Resilience, each with three dimensions: 
-                                  social, economic, and environmental stressors. The
-                                  overall MVI for Fiji is just below the median (51.7) with
-                                  a maximum score of 100."
-                              ),
-                              
-                              
-                              panelsPage(
-                                panel(title = "Strengths",
-                                      width = 350,
-                                      collapsed = TRUE,
-                                      body = 
-                                        p(style = "font-size:20pt","Fiji's enviornment is one of their largest strengths, as
-                                                 they have a positive Environmental Vulnerability score (70.48).
-                                                 There exposure to natural hazards is low, rarely being victims
-                                                 of natural hazards and experiencing no damages. Additionally,
-                                                 extreme weather events are rare with very few rainfall, heat, or temperature shocks. 
-                                                 Lack of environmental resilience is low for Fiji (53.2), where they rarely experience
-                                           inadequacy of water supply and are able to renew their freshwater resources. There 
-                                           are also many trees to block heat. Additionally, lack of social resilience is around the middle (43.43),
-                                                 with low demographic pressure (dependency ratio and population density) and social service provision,
-                                                 where there is not a lot of use of basic services, low child mortality, and more years of schooling.")
-                                ),
-                                panel(
-                                  title = "Weaknesses",
-                                  width = 350,
-                                  collapsed = TRUE,
-                                  body = 
-                                    p(style = "font-size:20pt","Lack of economic resilience is high with extremely low capcaity to
-                                              integrate with international markets. Additionally there is a low
-                                              population size, which impacts the economy of the island. On the other hand,
-                                              there is lack of crop land, which impacts their agricultural system. Finally,
-                                              there is a lack of gender equity in the country with few women represented
-                                              in national parliament.")
-                                ),
-                                
-                                panel(
-                                  title = "Opportunities",
-                                  width = 350,
-                                  collapsed = TRUE,
-                                  body = 
-                                    p(style = "font-size:20pt","Since population is low and the economy is weak, 
-                                              it is important to capitalize on the tourism on the island. 
-                                              The COVID-19 Pandemic appeared to disrupt the tourism on the island.
-                                              The World Bank and the Marine Ecology Consulting has conducted a 
-                                              needs and opportunites assessment to determine areas to build upon
-                                              and provide additional supports related to ecosystem resilience and sustainable
-                                              tourism.")
-                                  
-                                ),
-                                panel(
-                                  title = "Threats",
-                                  width = 350,
-                                  collapse = TRUE,
-                                  body =
-                                    p(style = "font-size:20pt","Most of Fiji's conservation efforts have been put towards
-                                              rainforests, coral reefs, and beaches, but they have left out dry forests.
-                                              Fijian dry forests require addtional supports to prevent against grazing, fire
-                                              forest clearing, and invasive species. The Fijian government fails to support
-                                              environmental planning and puts little care into improving their efforts.")
-                                  
-                                )
-                              )
-                              
-                           )
+                 navbarMenu(
+                   title = "Location Maps",
+                   tabPanel("World Location",
+                            leafletOutput("myworldmap", height = 700)
+                   ),
+                   tabPanel("Regional Location", leafletOutput("myregionalmap", height = 700)
+                   ),
+                   tabPanel("Country Location",
+                            leafletOutput("mycountrymap", height = 700)
+                   )
                  ),
                  
-                 navbarMenu(title = "Pacific Ocean",
-                            
-                            tabPanel("Regions of the Pacific",
-                                     img(src="Oceania_UN_Geoscheme_-_Map_with_Zones.svg",
-                                         height="600",
-                                         width="800")
-                            ),
-                            
-                            tabPanel("where?",
-                                     leafletOutput("myOnemap", height = 700),
-                                     p()
-                                     #actionButton("recalc", "New points")
-                            )
-                            
-                            
-                 ),
+                 
                  
                  navbarMenu(
                    title = "References",
@@ -291,6 +279,9 @@ ui <- navbarPage(id = "tabs",
                    tabPanel(tags$a(href = "https://www.britannica.com/topic/flag-of-Fiji",
                                    "History of the Fijian Flag")),
                    
+                   tabPanel(tags$a(href = "https://simplemaps.com/data/fj-cities",
+                                   "Mapping Data for Fiji")),
+                   
                    tabPanel(tags$a(href="https://www.un.org/ohrlls/mvi/documents",
                                    "Multidimensional Vulnerability Index")),
                    
@@ -309,10 +300,7 @@ ui <- navbarPage(id = "tabs",
                    
                    
                    
-                   
+                 )
                    
                  )
                  
-)
-
-
